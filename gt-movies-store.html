@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GT Movies Store — Vikram Renganathan</title>
+<meta name="description" content="A Django movie store built for CS 2340 at Georgia Tech.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="project-hero">
+  <div class="wrap">
+    <p class="kicker"><a class="back" href="index.html">Back to portfolio</a></p>
+    <h1>GT Movies Store</h1>
+    <p class="lede">A Django storefront for browsing movies, reviewing them, and buying them.</p>
+    <ul class="meta">
+      <li><strong>Course</strong> CS 2340</li>
+      <li><strong>Stack</strong> Django, Python, SQLite</li>
+      <li><strong>Time</strong> About 10 hours</li>
+      <!-- EDIT: add a repo link here if the repository is public.
+      <li><strong>Code</strong> <a href="https://github.com/viren108/REPO">GitHub</a></li>
+      -->
+    </ul>
+  </div>
+</div>
+
+<div class="wrap">
+<main>
+
+  <section style="border-top: 0;">
+    <div class="section-grid">
+      <h2>Demo</h2>
+      <div>
+        <!-- EDIT: replace VIDEO_ID with the id from your unlisted YouTube URL.
+             https://www.youtube.com/watch?v=ABC123  ->  VIDEO_ID is ABC123 -->
+        <div class="video">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
+            title="GT Movies Store demo video"
+            allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <p class="caption">A walkthrough of the whole application: creating an account, browsing the catalog, writing a review, and placing an order.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-grid">
+      <h2>What it does</h2>
+      <div>
+        <p>Each screen in the application exists to satisfy a specific user story. Here is what I built and who it is for.</p>
+
+        <!-- EDIT each block below to match what you actually shipped.
+             Delete any screen you didn't build; copy a block to add one. -->
+
+        <div class="screen">
+          <h3>Sign up and log in</h3>
+          <blockquote class="story">
+            <p>As a visitor, I want an account so that my cart and my past orders belong to me.</p>
+          </blockquote>
+          <p>Registration and login run on Django's built-in authentication, with the account app handling the forms and session. The navigation bar changes once you are signed in, and the cart and orders pages are closed to anonymous visitors.</p>
+          <div class="shot">Add a screenshot here: replace this box with &lt;img src="images/login.png" alt="Login page"&gt;</div>
+        </div>
+
+        <div class="screen">
+          <h3>Browse and search the catalog</h3>
+          <blockquote class="story">
+            <p>As a shopper, I want to see what is for sale and find a specific title quickly.</p>
+          </blockquote>
+          <p>The home page lists every movie with its cover, title, and price, pulled from the Movie model. A search box filters the list by title on the server side, so the results are a queryset rather than anything client-side.</p>
+          <div class="shot">Add a screenshot here: replace this box with &lt;img src="images/catalog.png" alt="Movie catalog"&gt;</div>
+        </div>
+
+        <div class="screen">
+          <h3>Movie detail and reviews</h3>
+          <blockquote class="story">
+            <p>As a shopper, I want to read what other people thought, and leave my own review that I can edit or delete later.</p>
+          </blockquote>
+          <p>Each movie has a detail page with its description, price, and every review left on it. Signed-in users can post a review, and the edit and delete controls only appear on reviews they wrote — the view checks the review's author against the request user before it will do anything.</p>
+          <div class="shot">Add a screenshot here: replace this box with &lt;img src="images/detail.png" alt="Movie detail page with reviews"&gt;</div>
+        </div>
+
+        <div class="screen">
+          <h3>Cart</h3>
+          <blockquote class="story">
+            <p>As a shopper, I want to collect a few movies and see what the total comes to before I commit.</p>
+          </blockquote>
+          <p>The cart lives in the session, keyed by movie id and quantity. The cart page renders each line item with a running total and lets you remove a single title or clear the whole thing.</p>
+          <div class="shot">Add a screenshot here: replace this box with &lt;img src="images/cart.png" alt="Shopping cart"&gt;</div>
+        </div>
+
+        <div class="screen">
+          <h3>Checkout and order history</h3>
+          <blockquote class="story">
+            <p>As a shopper, I want a record of what I bought.</p>
+          </blockquote>
+          <p>Checkout writes an Order with its related Items, empties the session cart, and sends you to a confirmation. The orders page lists every order on the account with its date and total.</p>
+          <div class="shot">Add a screenshot here: replace this box with &lt;img src="images/orders.png" alt="Order history"&gt;</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-grid">
+      <h2>How I worked</h2>
+      <div>
+        <!-- EDIT: this is the rubric's process section. Graders read this one properly.
+             Say what you actually did, including what went wrong. -->
+
+        <p>I worked backwards from the user stories rather than forwards from the code. Before writing anything I listed every story the specification asked for, decided which model each one needed to touch, and grouped them into apps — accounts, movies, cart. That list became my checklist, and I did not move on from a story until it worked end to end in the browser.</p>
+
+        <p>Within each story I kept the same order: model first, then migration, then the view, then the template, then the URL to reach it. Doing it in that order meant I was never writing a template against a field that did not exist yet. I committed after each working story, so when something broke I could tell exactly which story broke it.</p>
+
+        <p>Most of my time went to the parts where state has to survive between requests: the session-based cart, and making sure a user can only edit their own reviews. When I got stuck it was usually a mismatch between what the template expected and what the view was passing, and the Django error page plus a few print statements in the view resolved almost all of it. For the rest I went back to the Django documentation on querysets and relationships rather than pattern-matching from tutorials, which was slower at the time and much faster overall.</p>
+
+        <p>If I picked this up again, the first thing I would change is the cart. Keeping it in the session was the right call for a ten-hour build, but it means the cart vanishes when the session does. Moving it into a model attached to the user would fix that and make the checkout logic simpler.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><a href="index.html">Back to portfolio</a> — Georgia Institute of Technology, CS 2340, Fall 2026.</p>
+  </div>
+</footer>
+
+</body>
+</html>
